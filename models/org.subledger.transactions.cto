@@ -1,0 +1,35 @@
+/**
+ * subledger transactions.
+ */
+
+namespace org.subledger.transactions 
+import org.subledger.assets.*
+import org.subledger.participants.Billing
+import org.subledger.participants.Remiter
+
+transaction postInvoice {
+  o String invNo
+  o String invDt
+  o Double amount
+  o String invDueDt
+  o String tranDt
+  o String termsCd
+  --> Account account
+  --> Billing biller
+}
+
+transaction postPayment {
+  o String invNo
+  o Double amount
+  o String tranDt
+  o String reasonCd
+  --> Invoice invoice
+  --> Remiter remiter
+}
+
+transaction getAccount {
+  o String accountId
+}
+
+transaction setupNetwork {
+}

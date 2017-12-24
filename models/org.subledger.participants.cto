@@ -1,0 +1,21 @@
+/**
+ * subledger participants.
+ */
+namespace org.subledger.participants
+
+abstract participant Member {
+  o String name
+  o String phone optional
+  o String email optional
+}
+participant Billing identified by billingId extends Member {
+  o String billingId
+}
+
+participant OrderEntry identified by oeId extends Member {
+  o String oeId
+}
+
+participant Remiter identified by remitId extends Member {
+  o String remitId
+} 

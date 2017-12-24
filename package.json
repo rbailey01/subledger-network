@@ -1,0 +1,22 @@
+{
+  "name": "subledger-network",
+  "version": "0.0.1",
+  "description": "accounts receivable subledger",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "author": "bailey",
+  "email": "randy.bailey@mail.com",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "composer-admin": "latest",
+    "composer-client": "latest",
+    "composer-connector-embedded": "latest",
+    "browserfs": "latest",
+    "chai": "latest",
+    "eslint": "latest",
+    "istanbul": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest"
+  }
+}

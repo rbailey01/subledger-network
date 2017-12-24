@@ -1,0 +1,62 @@
+/**
+ * subledger assets.
+ */
+
+namespace org.subledger.assets 
+
+
+asset Account identified by accountId {
+  o String accountId
+  o String firstName
+  o String lastName
+}
+
+asset Invoice identified by invoiceId {
+  o String invoiceId
+  o Double balance
+  o String termsCd
+  o String invDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/ 
+  o String invDueDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+  o String paidDt
+  --> LineItem [] lineItems
+  --> Account account
+}
+//
+asset LineItem identified by lidId {
+  o String lidId
+  o RecType recType
+  o String lidDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+  o String postDt 
+  o Double amount
+  o String reasonCd
+  o String createdBy
+}
+
+/**
+ * enumerated types
+ *
+ * valid record types that can be posted
+ */
+enum RecType {
+  o INVOICE
+  o ADJUSTMENT
+  o PAYMENT
+}
+/** valid terms code values for an invoice 
+enum TermsCd {
+  o 01 //does not like numbers for enum??
+  o 02
+  o 03
+} */
+/**
+ * A concept for a simple street address
+ */
+abstract concept Address {
+  o String street optional
+  o String city optional
+  o String country default = "USA"
+}
+
+concept UnitedStatesAddress extends Address {
+  o String zipcode
+}

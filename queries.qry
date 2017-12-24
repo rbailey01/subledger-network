@@ -1,0 +1,32 @@
+/**
+ * New query file
+ */
+query getAccounts{
+  description: "Select account"
+  statement:
+  	SELECT org.subledger.assets.Account
+  		WHERE (accountId == _$accountId)
+
+}
+query SelectOpenInvoices{
+  description: "Select all open Invoice"
+  statement:
+  	SELECT org.subledger.assets.Invoice
+  		WHERE ((balance > 0)
+           OR (balance < 0))
+}
+query showtransactionsHistorians{ 
+  description: "Select transactions historians" 
+  statement: 
+    SELECT org.hyperledger.composer.system.HistorianRecord FROM 
+HistorianRegistry
+          WHERE (transactionType == 'getAccount' OR transactionType == 
+'postInvoice' OR transactionType == 'postPayment') 
+} 
+ 
+query findCommmodityHistoriansWithTime{ 
+  description: "Find commodity historians after a specified time" 
+  statement: 
+    SELECT org.hyperledger.composer.system.HistorianRecord FROM 
+HistorianRegistry WHERE (transactionTimestamp > _$justnow) 
+}
