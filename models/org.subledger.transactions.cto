@@ -8,18 +8,17 @@ import org.subledger.participants.Billing
 import org.subledger.participants.Remiter
 
 transaction postInvoice {
+  o String accountId
   o String invNo
   o String invDt
   o Double amount
   o String invDueDt
   o String tranDt
   o String termsCd
-  --> Account account
   --> Billing biller
 }
 
 transaction postPayment {
-  o String invNo
   o Double amount
   o String tranDt
   o String reasonCd
@@ -32,4 +31,12 @@ transaction getAccount {
 }
 
 transaction setupNetwork {
+}
+
+/**
+ * An event - when a payment is not able to be posted
+ */
+event PaymentNotPostedEvent {
+  o String message
+  o String transaction
 }

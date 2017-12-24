@@ -1,7 +1,7 @@
 /**
  * New query file
  */
-query getAccounts{
+query getAccount{
   description: "Select account"
   statement:
   	SELECT org.subledger.assets.Account
@@ -12,9 +12,16 @@ query SelectOpenInvoices{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.Invoice
-  		WHERE ((balance > 0)
-           OR (balance < 0))
+  		WHERE (balance != 0)
 }
+
+query SelectInvoicesForAccount{
+  description: "Select all open Invoice"
+  statement:
+  	SELECT org.subledger.assets.Invoice
+  		WHERE (accountId == _$accountId)
+}
+
 query showtransactionsHistorians{ 
   description: "Select transactions historians" 
   statement: 

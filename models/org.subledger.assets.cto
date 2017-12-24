@@ -1,3 +1,4 @@
+
 /**
  * subledger assets.
  */
@@ -13,13 +14,13 @@ asset Account identified by accountId {
 
 asset Invoice identified by invoiceId {
   o String invoiceId
+  o String accountId
   o Double balance
   o String termsCd
   o String invDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/ 
   o String invDueDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
   o String paidDt
   --> LineItem [] lineItems
-  --> Account account
 }
 //
 asset LineItem identified by lidId {

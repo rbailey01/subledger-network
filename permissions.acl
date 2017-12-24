@@ -1,13 +1,73 @@
 /**
- * Access control rules for receivables
+ * Access control rules for subledger network
  */
+rule billingUpdateParticipant {
+   description: "Allow Billing participants to access/update associated participant detail"
+   participant(p): "org.subledger.participants.Billing"
+   operation: READ, UPDATE
+   resource(r): "org.subledger.participants.Billing"
+   condition: (r.billingId == p.billingId)
+   action: ALLOW
+ }
+rule remiterUpdateParticipant {
+   description: "Allow Remiter participants to access/update its associated participant detail"
+   participant(p): "org.subledger.participants.Remiter"
+   operation: READ, UPDATE
+   resource(r): "org.subledger.participants.Remiter"
+   condition: (r.remitId == p.remitId)
+   action: ALLOW
+ }
+rule billingPostInvoice {
+   description: "Allow Billing participants access to submit postInvoice transaction"        
+   participant(p): "org.subledger.participants.Billing"
+   operation: READ, CREATE
+   resource(r): "org.subledger.**"
+   transaction(tx): "org.subledger.transactions.postInvoice"
+   condition: (tx.biller.billingId == p.billingId)
+   action: ALLOW
+ } 
+rule remiterPostPayment {
+   description: "Allow Remiter participants access to submit postPayment transaction"
+   participant(p): "org.subledger.participants.Remiter"
+   operation: READ, CREATE, UPDATE
+   resource(r): "org.subledger.**"
+   transaction(tx): "org.subledger.transactions.postPayment"
+   condition: (tx.remiter.remitId == p.remitId)
+   action: ALLOW
+ } 
+
+rule readInvoice {
+   description: "Allow participants access to read Invoice detail"
+   participant: "org.subledger.participants.*"
+   operation: READ
+   resource: "org.subledger.assets.Invoice"
+   action: ALLOW
+ }
+rule readLineItem {
+   description: "Allow participants access to read lineItem detail"
+   participant: "org.subledger.participants.*"
+   operation: READ
+   resource: "org.subledger.assets.LineItem"
+   action: ALLOW
+ } 
+rule readAccount {
+   description: "Allow participants access to read Account detail"
+   participant: "org.subledger.participants.*"
+   operation: READ
+   resource: "org.subledger.assets.Account"
+   action: ALLOW
+ } 
+ 
+/**
+ * Access control rules for receivables
+
  rule Default {
    description: "Allow all participants access to all resources"
    participant: "ANY"
    operation: ALL
    resource: "org.subledger.**"
    action: ALLOW
- }
+ } */
 
  rule SystemACL {
    description: "System ACL to permit all access"
