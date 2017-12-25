@@ -19,6 +19,7 @@ transaction postInvoice {
 }
 
 transaction postPayment {
+  o String accountId
   o Double amount
   o String tranDt
   o String reasonCd

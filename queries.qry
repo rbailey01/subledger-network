@@ -12,28 +12,41 @@ query SelectOpenInvoices{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.Invoice
-  		WHERE (balance != 0)
+  	 WHERE (balance != 0)
 }
 
 query SelectInvoicesForAccount{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.Invoice
-  		WHERE (accountId == _$accountId)
+  	 WHERE (accountId == _$accountId)
 }
 
-query showtransactionsHistorians{ 
-  description: "Select transactions historians" 
+query SelectLineItemsForInvoice{
+  description: "Select all open Invoice"
+  statement:
+  	SELECT org.subledger.assets.LineItem
+  	 WHERE ((lidId >= _$lowRange)
+       AND  (lidId <= _$highRange))
+}
+
+query showPaymentTransactionsHistorians{ 
+  description: "Select postPayment transactions historians" 
   statement: 
-    SELECT org.hyperledger.composer.system.HistorianRecord FROM 
-HistorianRegistry
-          WHERE (transactionType == 'getAccount' OR transactionType == 
-'postInvoice' OR transactionType == 'postPayment') 
+  SELECT org.hyperledger.composer.system.HistorianRecord
+   WHERE (transactionType == 'org.subledger.transactions.postPayment') 
+}
+
+query showInvoiceTransactionsHistorians{ 
+  description: "Select postInvoice transactions historians" 
+  statement: 
+  SELECT org.hyperledger.composer.system.HistorianRecord
+   WHERE (transactionType == 'org.subledger.transactions.postInvoice') 
 } 
  
-query findCommmodityHistoriansWithTime{ 
-  description: "Find commodity historians after a specified time" 
+query findAllHistoriansWithTime{ 
+  description: "Find all historians after a specified time" 
   statement: 
-    SELECT org.hyperledger.composer.system.HistorianRecord FROM 
-HistorianRegistry WHERE (transactionTimestamp > _$justnow) 
+    SELECT org.hyperledger.composer.system.HistorianRecord 
+     WHERE (transactionTimestamp > _$justnow)   
 }
