@@ -19,3 +19,7 @@ participant OrderEntry identified by oeId extends Member {
 participant Remiter identified by remitId extends Member {
   o String remitId
 } 
+
+participant Adjuster identified by adjusterId extends Member {
+  o String adjusterId
+} 

@@ -5,29 +5,40 @@
 
 namespace org.subledger.assets 
 
-
 asset Account identified by accountId {
   o String accountId
   o String firstName
   o String lastName
 }
 
+
 asset Invoice identified by invoiceId {
   o String invoiceId
-  o String accountId
-  o Double balance
+  --> Account account
+  o Double invoiceAmount   //** Starting balance
+  o Double currentBalance  //** Should equal invoiceAmount +/- transactions in the adjustmentLog
   o String termsCd
-  o String invDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/ 
-  o String invDueDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
-  o String paidDt
-  --> LineItem [] lineItems
+  o DateTime tranDt optional
+  o DateTime invDt
+  o DateTime invDueDt
+  o DateTime paidDt optional
+  o String createdBy 
+  o Adjustment [] adjustmentLog
 }
-//
-asset LineItem identified by lidId {
-  o String lidId
+/** 
+concept AdjustmentLink {
+  --> Invoice invoice
+  o Double amount
+} */
+
+asset Adjustment identified by adjustmentID {
+  o String adjustmentID        //** Would have to find some way to make this unique
+  // o AdjustmentLink[] invoices  //**need if payments/adj's can apply to multipe invoices
+  //--> Account account
+  //--> Invoice invoice
   o RecType recType
-  o String lidDt regex =/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
-  o String postDt 
+  o DateTime tranDt
+  o DateTime postDt
   o Double amount
   o String reasonCd
   o String createdBy
@@ -39,13 +50,13 @@ asset LineItem identified by lidId {
  * valid record types that can be posted
  */
 enum RecType {
-  o INVOICE
   o ADJUSTMENT
   o PAYMENT
 }
 /** valid terms code values for an invoice 
+  
 enum TermsCd {
-  o 01 //does not like numbers for enum??
+  o 01                  //** does not like numbers for enum??
   o 02
   o 03
 } */

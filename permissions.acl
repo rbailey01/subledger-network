@@ -43,13 +43,13 @@ rule readInvoice {
    resource: "org.subledger.assets.Invoice"
    action: ALLOW
  }
-rule readLineItem {
+/* rule readLineItem {
    description: "Allow participants access to read lineItem detail"
    participant: "org.subledger.participants.*"
    operation: READ
    resource: "org.subledger.assets.LineItem"
    action: ALLOW
- } 
+ } */
 rule readAccount {
    description: "Allow participants access to read Account detail"
    participant: "org.subledger.participants.*"

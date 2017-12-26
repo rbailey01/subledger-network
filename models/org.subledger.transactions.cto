@@ -6,14 +6,15 @@ namespace org.subledger.transactions
 import org.subledger.assets.*
 import org.subledger.participants.Billing
 import org.subledger.participants.Remiter
+import org.subledger.participants.Adjuster
 
 transaction postInvoice {
-  o String accountId
   o String invNo
-  o String invDt
+  o String accountId
+  o DateTime invDt
   o Double amount
-  o String invDueDt
-  o String tranDt
+  o DateTime invDueDt
+  o DateTime tranDt
   o String termsCd
   --> Billing biller
 }
@@ -21,10 +22,19 @@ transaction postInvoice {
 transaction postPayment {
   o String accountId
   o Double amount
-  o String tranDt
+  o DateTime tranDt
   o String reasonCd
   --> Invoice invoice
   --> Remiter remiter
+}
+
+transaction postAdjustment {
+  o String accountId
+  o Double amount
+  o DateTime tranDt
+  o String reasonCd
+  --> Invoice invoice
+  --> Adjuster adjuster
 }
 
 transaction getAccount {
@@ -38,6 +48,13 @@ transaction setupNetwork {
  * An event - when a payment is not able to be posted
  */
 event PaymentNotPostedEvent {
+  o String message
+  o String transaction
+}
+/**
+ * An event - when a adjustment is not able to be posted
+ */
+event AdjNotPostedEvent {
   o String message
   o String transaction
 }

@@ -12,23 +12,23 @@ query SelectOpenInvoices{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.Invoice
-  	 WHERE (balance != 0)
+  	 WHERE (currentBalance != 0)
 }
 
 query SelectInvoicesForAccount{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.Invoice
-  	 WHERE (accountId == _$accountId)
+  	 WHERE (account.accountId == _$accountId)
 }
 
-query SelectLineItemsForInvoice{
+/* query SelectLineItemsForInvoice{
   description: "Select all open Invoice"
   statement:
   	SELECT org.subledger.assets.LineItem
   	 WHERE ((lidId >= _$lowRange)
        AND  (lidId <= _$highRange))
-}
+} */
 
 query showPaymentTransactionsHistorians{ 
   description: "Select postPayment transactions historians" 
